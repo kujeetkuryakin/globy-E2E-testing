@@ -1,0 +1,23 @@
+{
+  "name": "globy-e2e-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kujeetkuryakin/globy-E2E-testing.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/kujeetkuryakin/globy-E2E-testing/issues"
+  },
+  "homepage": "https://github.com/kujeetkuryakin/globy-E2E-testing#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@types/node": "^25.6.0"
+  }
+}
