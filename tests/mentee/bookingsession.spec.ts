@@ -9,7 +9,7 @@ test('booking Session By Coach', async ({ page }) => {
     planning: 'Career Planning',
     description: 'For Job Purpos',
     friendNamed: 'Fahmi',
-    time: '10:',
+    time: '12:',
     date: '25',
   };
 
