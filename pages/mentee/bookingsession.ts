@@ -27,6 +27,7 @@ export class BookingSession {
   confirmAndBookBtn: Locator;
   confirmBtn: Locator;
   continueCoachBtn: Locator;
+  nextMonthBtn: Locator;
 
   notificationSuccess: Locator;
   constructor(page: Page) {
@@ -45,6 +46,7 @@ export class BookingSession {
     this.bookSessionBtn = page.getByRole('button', { name: 'Book Session' });
     this.confirmBtn = page.getByRole('button', { name: 'Confirm', exact: true });
     this.continueCoachBtn = page.getByRole('button', { name: 'Continue to Coach Selection' });
+    this.nextMonthBtn = page.getByRole('button', { name: 'Go to next month' });
 
     this.notificationSuccess = page.getByRole('heading', { name: 'Booking Successful! 🎉' });
   }
