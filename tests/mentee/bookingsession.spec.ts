@@ -9,8 +9,8 @@ test('Positive Test: Booking Session By Coach', async ({ page }) => {
     planning: 'Career Planning',
     description: 'For Job Purpos',
     friendNamed: 'Fahmi',
-    time: '09:',
-    date: '25',
+    time: '15:',
+    date: '30',
   };
 
   await login.goto();
