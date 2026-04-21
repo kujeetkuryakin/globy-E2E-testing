@@ -20,9 +20,7 @@ test('admin reset password success', async ({ page }) => {
         newPassword: `Newpass_${timestamp}`
     };
 
-    // login admin
-    await login.goto();
-    await login.login('raniaathallaaa@gmail.com', 'Password123_');
+
 
     // create user
     await createUserPage.goToUserManagement();

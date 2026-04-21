@@ -1,4 +1,38 @@
 {
+<<<<<<< HEAD
   "cookies": [],
   "origins": []
+=======
+  "cookies": [
+    {
+      "name": "SITE_TOTAL_ID",
+      "value": "aedn9Bt4i15qQRH4gweBrgAAQg4",
+      "domain": "globy.wins.web.id",
+      "path": "/",
+      "expires": 1808309109.120663,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://globy.wins.web.id",
+      "localStorage": [
+        {
+          "name": "auth_token",
+          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk2NjUyMTIwNCIsImVtYWlsIjoicmFuaWFhdGhhbGxhYWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IlJhbmlhIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc2NzczMTIwLCJleHAiOjE3NzY4NTk1MjB9.signature"
+        },
+        {
+          "name": "globy_token_expires",
+          "value": "1776859520752"
+        },
+        {
+          "name": "globy_user",
+          "value": "{\"id\":\"mentee-1758966521204\",\"email\":\"raniaathallaaa@gmail.com\",\"firstName\":\"Admin\",\"lastName\":\"Rania\",\"name\":\"Admin Rania\",\"phone\":\"6282216138641\",\"bio\":\"\",\"location\":\"\",\"timezone\":\"Asia/Jakarta\",\"role\":\"ADMIN\",\"isActive\":true,\"isVerified\":false,\"profileImageUrl\":\"/uploads/profile-mentee-1758966521204-1776661850309-80139580.jpeg\",\"createdAt\":\"2025-09-27T09:48:42.295Z\",\"updatedAt\":\"2026-04-20T05:10:50.373Z\",\"totalSessions\":0,\"totalHours\":0}"
+        }
+      ]
+    }
+  ]
+>>>>>>> 63c762b (edit login session)
 }

@@ -1,13 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
 import { SpecificDateAvailability } from '../../pages/admin/setspesificdate';
 
 test('set specific date availability success', async ({ page }) => {
-    const login = new LoginPage(page);
     const availability = new SpecificDateAvailability(page);
-
-    await login.goto();
-    await login.login('raniaathallaaa@gmail.com', 'Password123_');
 
     await expect(
         page.getByRole('navigation')

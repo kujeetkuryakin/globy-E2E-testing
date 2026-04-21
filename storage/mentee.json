@@ -1,4 +1,19 @@
 {
+<<<<<<< HEAD
   "cookies": [],
+=======
+  "cookies": [
+    {
+      "name": "SITE_TOTAL_ID",
+      "value": "aedoBaRrvHXOR4QySLmcIwAACwI",
+      "domain": "globy.wins.web.id",
+      "path": "/",
+      "expires": 1808309126.294957,
+      "httpOnly": true,
+      "secure": false,
+      "sameSite": "Lax"
+    }
+  ],
+>>>>>>> 63c762b (edit login session)
   "origins": []
 }

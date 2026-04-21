@@ -35,11 +35,16 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
+      name: 'setup',
+      testMatch: /.*\.setup\.ts/,
+    },
+    {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
 
     {
+<<<<<<< HEAD
       name: 'setup-admin',
       testMatch: /setup\/admin\.setup\.ts/,
     },
@@ -66,6 +71,32 @@ export default defineConfig({
       name: 'mentee',
       use: { storageState: 'storage/mentee.json' },
       dependencies: ['setup-mentee'],
+=======
+      name: 'admin',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/admin.json'
+      },
+      dependencies: ['setup'],
+    },
+
+    {
+      name: 'coach',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/coach.json'
+      },
+      dependencies: ['setup'],
+    },
+
+    {
+      name: 'mentee',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/mentee.json'
+      },
+      dependencies: ['setup'],
+>>>>>>> 63c762b (edit login session)
     },
     /* Test against mobile viewports. */
     // {
