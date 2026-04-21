@@ -39,6 +39,34 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
+    {
+      name: 'setup-admin',
+      testMatch: /setup\/admin\.setup\.ts/,
+    },
+    {
+      name: 'setup-coach',
+      testMatch: /setup\/coach\.setup\.ts/,
+    },
+    {
+      name: 'setup-mentee',
+      testMatch: /setup\/mentee\.setup\.ts/,
+    },
+
+    {
+      name: 'admin',
+      use: { storageState: 'storage/admin.json' },
+      dependencies: ['setup-admin'],
+    },
+    {
+      name: 'coach',
+      use: { storageState: 'storage/coach.json' },
+      dependencies: ['setup-coach'],
+    },
+    {
+      name: 'mentee',
+      use: { storageState: 'storage/mentee.json' },
+      dependencies: ['setup-mentee'],
+    },
     /* Test against mobile viewports. */
     // {
     //   name: 'Mobile Chrome',
