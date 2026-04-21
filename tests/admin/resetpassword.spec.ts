@@ -20,7 +20,7 @@ test('admin reset password success', async ({ page }) => {
         newPassword: `Newpass_${timestamp}`
     };
 
-
+    await page.goto('/admin-dashboard');
 
     // create user
     await createUserPage.goToUserManagement();

@@ -13,6 +13,7 @@ test('admin create mentee regular success', async ({ page }) => {
         password: 'Password123_'
     };
 
+    await page.goto('/admin-dashboard');
     await userPage.goToUserManagement();
     await userPage.openCreateUser();
     await userPage.fillForm(user);

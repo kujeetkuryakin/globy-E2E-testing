@@ -4,6 +4,8 @@ import { SpecificDateAvailability } from '../../pages/admin/setspesificdate';
 test('set specific date availability success', async ({ page }) => {
     const availability = new SpecificDateAvailability(page);
 
+    await page.goto('/admin-dashboard');
+
     await expect(
         page.getByRole('navigation')
     ).toBeVisible();

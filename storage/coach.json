@@ -6,10 +6,10 @@
   "cookies": [
     {
       "name": "SITE_TOTAL_ID",
-      "value": "aedn9Bt4i15qQRH4gweBrQAAVhI",
+      "value": "aeewH4Ta02gQXtxdDHIiBgAAgRA",
       "domain": "globy.wins.web.id",
       "path": "/",
-      "expires": 1808309108.99376,
+      "expires": 1808327584.069396,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
@@ -21,11 +21,11 @@
       "localStorage": [
         {
           "name": "auth_token",
-          "value": "jwt.eyJzdWIiOiJjb2FjaC0xNzY1MzMwOTE4NzkwIiwiZW1haWwiOiJlbGF5bmUuc2VsbWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQ29hY2giLCJsYXN0TmFtZSI6IkVsYXluZSIsInJvbGUiOiJDT0FDSCIsImlhdCI6MTc3Njc3MzExMSwiZXhwIjoxNzc2ODU5NTExfQ==.signature"
+          "value": "jwt.eyJzdWIiOiJjb2FjaC0xNzY1MzMwOTE4NzkwIiwiZW1haWwiOiJlbGF5bmUuc2VsbWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQ29hY2giLCJsYXN0TmFtZSI6IkVsYXluZSIsInJvbGUiOiJDT0FDSCIsImlhdCI6MTc3Njc5MTU4NiwiZXhwIjoxNzc2ODc3OTg2fQ==.signature"
         },
         {
           "name": "globy_token_expires",
-          "value": "1776859512078"
+          "value": "1776877987027"
         },
         {
           "name": "globy_user",

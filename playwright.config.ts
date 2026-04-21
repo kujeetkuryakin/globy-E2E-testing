@@ -26,7 +26,7 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('')`. */
-    // baseURL: 'http://localhost:3000',
+    baseURL: 'https://globy.wins.web.id',
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',
@@ -35,8 +35,19 @@ export default defineConfig({
   /* Configure projects for major browsers */
   projects: [
     {
-      name: 'setup',
-      testMatch: /.*\.setup\.ts/,
+      name: 'setup-admin',
+      testDir: './setup',
+      testMatch: 'admin.setup.ts',
+    },
+    {
+      name: 'setup-coach',
+      testDir: './setup',
+      testMatch: 'coach.setup.ts',
+    },
+    {
+      name: 'setup-mentee',
+      testDir: './setup',
+      testMatch: 'mentee.setup.ts',
     },
     {
       name: 'chromium',
@@ -44,7 +55,7 @@ export default defineConfig({
     },
 
     {
-<<<<<<< HEAD
+
       name: 'setup-admin',
       testMatch: /setup\/admin\.setup\.ts/,
     },
@@ -67,17 +78,19 @@ export default defineConfig({
       use: { storageState: 'storage/coach.json' },
       dependencies: ['setup-coach'],
     },
+
     {
       name: 'mentee',
       use: { storageState: 'storage/mentee.json' },
       dependencies: ['setup-mentee'],
-=======
+    },
+
+    {
       name: 'admin',
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'storage/admin.json'
       },
-      dependencies: ['setup'],
     },
 
     {
@@ -86,7 +99,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         storageState: 'storage/coach.json'
       },
-      dependencies: ['setup'],
     },
 
     {
@@ -95,8 +107,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         storageState: 'storage/mentee.json'
       },
-      dependencies: ['setup'],
->>>>>>> 63c762b (edit login session)
     },
     /* Test against mobile viewports. */
     // {

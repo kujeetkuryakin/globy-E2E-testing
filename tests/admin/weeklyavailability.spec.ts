@@ -4,6 +4,7 @@ import { AvailabilityPage } from '../../pages/admin/weeklyavailability';
 test('admin set availability success', async ({ page }) => {
     const availability = new AvailabilityPage(page);
 
+    await page.goto('/admin-dashboard');
     await availability.openAvailabilitySetting();
 
     await availability.selectCoach('ela');

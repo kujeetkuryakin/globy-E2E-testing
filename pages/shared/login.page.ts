@@ -15,7 +15,7 @@ export class LoginPage {
     }
 
     async goto() {
-        await this.page.goto('https://globy.wins.web.id/login');
+        await this.page.goto('/login');
     }
 
     async login(email: string, password: string) {
