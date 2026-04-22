@@ -1,8 +1,7 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
 import { CreateMenteeProject } from '../../pages/admin/creatementeeproject';
 
-test('admin create mentee project success', async ({ page }) => {
+test('Positive Test: admin create mentee project success', async ({ page }) => {
     const login = new LoginPage(page);
     const userPage = new CreateMenteeProject(page);
 
