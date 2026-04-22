@@ -9,6 +9,11 @@ export type CoachForm = {
   time: string;
 };
 
+export type TopicForm = CoachForm & {
+  /** Nama topik yang ingin dipilih, contoh: 'Public Speaking' */
+  topic: string;
+};
+
 enum Method {
   COACH = 'By CoachChoose your preferred',
   TOPIC = 'By TopicChoose learning topic',
@@ -143,8 +148,11 @@ export class BookingSession {
 
       await this.continueCoachBtn.click();
       await this.fillFormCoach(form);
+      // Scroll ke tombol karena form panjang — bisa di luar viewport
+      await this.confirmAndBookBtn.scrollIntoViewIfNeeded();
       await this.confirmAndBookBtn.click();
-
+      // Tunggu modal konfirmasi muncul sebelum klik Confirm
+      await this.modalConfirm.waitFor({ state: 'visible', timeout: 8000 });
       await this.confirmBtn.click();
 
       const result = await Promise.race([
@@ -199,6 +207,218 @@ export class BookingSession {
     await this.description.focus();
     await this.description.pressSequentially(form ? form.description : '', { delay: 50 });
     await this.friendNamed.fill(form ? form.friendNamed : '');
+  }
+
+  /** Tunggu hasil booking setelah klik Confirm: 'success' | 'failed' | 'timeout' */
+  private async _waitBookingResult(): Promise<'success' | 'failed' | 'timeout'> {
+    return Promise.race([
+      this.notificationSuccess
+        .first()
+        .waitFor({ state: 'visible', timeout: 14000 })
+        .then(() => 'success' as const)
+        .catch(() => 'timeout' as const),
+      this.headTextElementFailedBook
+        .waitFor({ state: 'visible', timeout: 14000 })
+        .then(() => 'failed' as const)
+        .catch(() => 'timeout' as const),
+    ]);
+  }
+
+  /**
+   * Tutup notifikasi/modal gagal lalu navigasi kembali ke halaman pilih tanggal.
+   * @param currentDate Tanggal saat ini (untuk menunggu kalender kembali muncul)
+   */
+  private async _handleFailedBooking(currentDate: number): Promise<void> {
+    console.log(`❌ Booking gagal pada tanggal ${currentDate}, mencoba tanggal berikutnya...`);
+    const isModalVisible = await this.modalConfirm.isVisible();
+    if (isModalVisible) {
+      await this.btnCloseModalConfirm.click();
+      await this.btnCancelModalConfirm.click();
+    } else {
+      await this.btnCloseNotificationFailed.click();
+    }
+    await this.btnBackForm.scrollIntoViewIfNeeded();
+    await this.btnBackForm.click();
+    // Tunggu kalender kembali muncul
+    await this.page
+      .getByRole('gridcell', { name: new RegExp(`^${currentDate}(\\s|$)`) })
+      .first()
+      .waitFor({ state: 'visible', timeout: 3000 })
+      .catch(() => null);
+  }
+
+  async bookByTopic(form: TopicForm, maxAttempts: number = 31): Promise<void> {
+    await this.page.getByText(Method.TOPIC).click();
+    // Pilih kartu topik — filter div yang mengandung nama topik
+    await this.page.locator('div').filter({ hasText: form.topic }).first().click();
+    // Pilih coach pertama yang tersedia untuk topik ini
+    await this.selectCoachBtn.first().click();
+
+    let currentDate = form.date;
+    let movedToNextMonth = false;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      console.log(`[Topic - Attempt ${attempt + 1}] Mencoba tanggal: ${currentDate}`);
+
+      const dateRegex = new RegExp(`^${currentDate}(\\s|$)`);
+      const dateCell = this.page.getByRole('gridcell', { name: dateRegex });
+      const cellCount = await dateCell.count();
+
+      if (cellCount === 0) {
+        if (!movedToNextMonth) {
+          console.log(`Tanggal ${currentDate} tidak ditemukan, pindah ke bulan berikutnya...`);
+          await this.nextMonthBtn.click();
+          movedToNextMonth = true;
+          currentDate = 1;
+          continue;
+        }
+        throw new Error(`Tanggal ${currentDate} tidak ditemukan setelah pindah bulan.`);
+      }
+
+      const isDisabled = await dateCell.first().isDisabled();
+      if (isDisabled) {
+        console.log(`Tanggal ${currentDate} disabled, melewati...`);
+        currentDate++;
+        continue;
+      }
+
+      await dateCell.first().click();
+
+      const slotWaktu = this.page.getByRole('button', { name: form.time });
+      const slotVisible = await slotWaktu
+        .waitFor({ state: 'visible', timeout: 2000 })
+        .then(() => true)
+        .catch(() => false);
+
+      if (!slotVisible) {
+        console.log(`Tanggal ${currentDate}: tidak ada slot "${form.time}", melewati...`);
+        currentDate++;
+        continue;
+      }
+
+      await slotWaktu.click();
+      await this.continueCoachBtn.click();
+      await this.fillFormCoach(form);
+      // Scroll ke tombol karena form panjang — bisa di luar viewport
+      await this.confirmAndBookBtn.scrollIntoViewIfNeeded();
+      await this.confirmAndBookBtn.click();
+      // Tunggu modal konfirmasi muncul sebelum klik Confirm
+      await this.modalConfirm.waitFor({ state: 'visible', timeout: 8000 });
+      await this.confirmBtn.click();
+
+      const result = await this._waitBookingResult();
+
+      if (result === 'success') {
+        console.log(`✅ Booking berhasil pada tanggal ${currentDate}!`);
+        return;
+      }
+      if (result === 'failed') {
+        await this._handleFailedBooking(currentDate);
+        currentDate++;
+        continue;
+      }
+      throw new Error(`Timeout menunggu hasil booking pada tanggal ${currentDate}.`);
+    }
+    throw new Error(`Tidak ada tanggal tersedia setelah ${maxAttempts} percobaan.`);
+  }
+
+  async bookByDateTime(form: CoachForm, maxAttempts: number = 31): Promise<void> {
+    await this.page.getByText(Method.TIME).click();
+
+    let currentDate = form.date;
+    let movedToNextMonth = false;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt++) {
+      console.log(`[DateTime - Attempt ${attempt + 1}] Mencoba tanggal: ${currentDate}`);
+
+      const dateRegex = new RegExp(`^${currentDate}(\\s|$)`);
+      const dateCell = this.page.getByRole('gridcell', { name: dateRegex });
+      const cellCount = await dateCell.count();
+
+      if (cellCount === 0) {
+        if (!movedToNextMonth) {
+          console.log(`Tanggal ${currentDate} tidak ditemukan, pindah ke bulan berikutnya...`);
+          await this.nextMonthBtn.click();
+          movedToNextMonth = true;
+          currentDate = 1;
+          continue;
+        }
+        throw new Error(`Tanggal ${currentDate} tidak ditemukan setelah pindah bulan.`);
+      }
+
+      const isDisabled = await dateCell.first().isDisabled();
+      if (isDisabled) {
+        console.log(`Tanggal ${currentDate} disabled, melewati...`);
+        currentDate++;
+        continue;
+      }
+
+      await dateCell.first().click();
+
+      const slotWaktu = this.page.getByRole('button', { name: form.time });
+      const slotVisible = await slotWaktu
+        .waitFor({ state: 'visible', timeout: 9000 })
+        .then(() => true)
+        .catch(() => false);
+
+      if (!slotVisible) {
+        console.log(`Tanggal ${currentDate}: tidak ada slot "${form.time}", melewati...`);
+        currentDate++;
+        continue;
+      }
+
+      await slotWaktu.click();
+      // Lanjut ke halaman Coach Selection, lalu pilih coach pertama yang tersedia
+      await this.continueCoachBtn.click();
+      await this.selectCoachBtn.first().click();
+
+      await this.fillFormCoach(form);
+      // Scroll ke tombol karena form panjang — bisa di luar viewport
+      await this.confirmAndBookBtn.scrollIntoViewIfNeeded();
+      await this.confirmAndBookBtn.click();
+      // Tunggu modal konfirmasi muncul sebelum klik Confirm
+      await this.modalConfirm.waitFor({ state: 'visible', timeout: 8000 }).catch(async ()=>{
+        await this.confirmAndBookBtn.click();
+      })
+      await this.confirmBtn.click();
+
+      const result = await this._waitBookingResult();
+
+      if (result === 'success') {
+        console.log(`✅ Booking berhasil pada tanggal ${currentDate}!`);
+        return;
+      }
+      if (result === 'failed') {
+        const isModalVisible = await this.modalConfirm.isVisible();
+        if (isModalVisible) {
+          await this.btnCloseModalConfirm.click();
+          await this.btnCancelModalConfirm.click();
+        } else {
+          await this.btnCloseNotificationFailed.click();
+        }
+        await this.btnBackForm.scrollIntoViewIfNeeded();
+        await this.btnBackForm.click();
+        const calendarVisible = await this.page
+          .getByRole('gridcell', { name: dateRegex })
+          .first()
+          .waitFor({ state: 'visible', timeout: 2000 })
+          .then(() => true)
+          .catch(() => false);
+        if (!calendarVisible) {
+          // Masih di halaman Coach Selection, klik Back sekali lagi
+          await this.btnBackForm.click();
+          await this.page
+            .getByRole('gridcell', { name: dateRegex })
+            .first()
+            .waitFor({ state: 'visible', timeout: 3000 })
+            .catch(() => null);
+        }
+        currentDate++;
+        continue;
+      }
+      throw new Error(`Timeout menunggu hasil booking pada tanggal ${currentDate}.`);
+    }
+    throw new Error(`Tidak ada tanggal tersedia setelah ${maxAttempts} percobaan.`);
   }
 
   async selectDate(date: number): Promise<void> {
