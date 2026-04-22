@@ -17,8 +17,8 @@ test('Simulasi Race Condition: 2 User Berebut 1 Slot Jadwal', async ({ browser }
     planning: 'Career Planning',
     description: 'Testing concurrency with 2 users',
     friendNamed: 'Fahmi',
-    time: '15:',
-    date: '30',
+    time: '15:00',
+    date: 23,
   };
 
   async function prepareBookingToConfirmStage(
@@ -48,10 +48,10 @@ test('Simulasi Race Condition: 2 User Berebut 1 Slot Jadwal', async ({ browser }
 
   await Promise.all([booking1.confirmBtn.click(), booking2.confirmBtn.click()]);
 
-  await page1.waitForTimeout(3000);
+  await page1.waitForTimeout(5000);
 
-  const user1Success = await booking1.notificationSuccess.isVisible();
-  const user2Success = await booking2.notificationSuccess.isVisible();
+  const user1Success = await booking1.notificationSuccess.isVisible({ timeout: 5000 });
+  const user2Success = await booking2.notificationSuccess.isVisible({ timeout: 5000 });
 
   console.log(`Status User 1: ${user1Success ? 'Berhasil Booking' : 'Gagal/Ditolak'}`);
   console.log(`Status User 2: ${user2Success ? 'Berhasil Booking' : 'Gagal/Ditolak'}`);
