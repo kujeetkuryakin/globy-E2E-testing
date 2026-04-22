@@ -2,10 +2,10 @@
   "cookies": [
     {
       "name": "SITE_TOTAL_ID",
-      "value": "aedJuP90FE8Jtia8VtHsYAAAVAQ",
+      "value": "aehX8EPYz1lBweN9fl0cVAABDwM",
       "domain": "globy.wins.web.id",
       "path": "/",
-      "expires": 1808301368.962325,
+      "expires": 1808370543.553993,
       "httpOnly": true,
       "secure": false,
       "sameSite": "Lax"
