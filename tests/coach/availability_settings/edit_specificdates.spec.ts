@@ -1,6 +1,6 @@
 import { test } from "@playwright/test";
 import { LoginPage } from "../../../pages/shared/login.page";
-import { AvailabislitySettingsPage } from "../../../pages/coach/availability_settings";
+import { AvailabilitySettingsPage } from "../../../pages/coach/availability_settings";
 
 test("Edit Specific Date", async ({ page }) => {
   test.setTimeout(60000);
