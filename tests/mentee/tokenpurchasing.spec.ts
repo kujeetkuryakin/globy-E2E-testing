@@ -8,6 +8,7 @@ test.describe('Feature: Token Purchasing', () => {
     await login.goto();
 
     await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
+    await page.goto('/dashboard');
   });
 
   test('Positive: User should be able to buy token using BCA Virtual Account', async ({ page }) => {

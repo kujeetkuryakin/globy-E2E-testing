@@ -16,12 +16,12 @@ test('Positive Test: Booking Session Online By Coach', async ({ page }) => {
 
   await login.goto();
   await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
-
+  await page.goto('/dashboard');
   await booking.bookMode(true);
-
   await booking.bookByCoach(form);
-
-  await expect(booking.notificationSuccess.first()).toBeVisible({
-    timeout: 5000,
-  });
+  await expect(booking.notificationSuccess.first()).toBeVisible(
+    {
+      timeout: 5000,
+    });
 });
+
