@@ -1,17 +1,17 @@
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../../pages/shared/login.page';
-import { BookingSession, CoachForm } from '../../pages/mentee/bookingsession';
+import { BookingOnlineSession, CoachForm } from '../../pages/mentee/bookingonlinesession';
 
 test('Simulasi Race Condition: 2 User Berebut 1 Slot Jadwal', async ({ browser }) => {
   const context1 = await browser.newContext();
   const page1 = await context1.newPage();
   const login1 = new LoginPage(page1);
-  const booking1 = new BookingSession(page1);
+  const booking1 = new BookingOnlineSession(page1);
 
   const context2 = await browser.newContext();
   const page2 = await context2.newPage();
   const login2 = new LoginPage(page2);
-  const booking2 = new BookingSession(page2);
+  const booking2 = new BookingOnlineSession(page2);
 
   const form: CoachForm = {
     planning: 'Career Planning',
@@ -23,7 +23,7 @@ test('Simulasi Race Condition: 2 User Berebut 1 Slot Jadwal', async ({ browser }
 
   async function prepareBookingToConfirmStage(
     login: LoginPage,
-    booking: BookingSession,
+    booking: BookingOnlineSession,
     email: string,
   ) {
     await login.goto();
