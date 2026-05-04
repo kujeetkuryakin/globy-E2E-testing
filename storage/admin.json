@@ -1,4 +1,22 @@
 {
   "cookies": [],
-  "origins": []
+  "origins": [
+    {
+      "origin": "https://globy.wins.web.id",
+      "localStorage": [
+        {
+          "name": "auth_token",
+          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk2NjUyMTIwNCIsImVtYWlsIjoicmFuaWFhdGhhbGxhYWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IlJhbmlhIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc3ODg0NDE0LCJleHAiOjE3Nzc5NzA4MTR9.signature"
+        },
+        {
+          "name": "globy_token_expires",
+          "value": "1777970814691"
+        },
+        {
+          "name": "globy_user",
+          "value": "{\"id\":\"mentee-1758966521204\",\"email\":\"raniaathallaaa@gmail.com\",\"firstName\":\"Admin\",\"lastName\":\"Rania\",\"role\":\"ADMIN\"}"
+        }
+      ]
+    }
+  ]
 }
