@@ -18,9 +18,10 @@ enum Method {
   COACH = 'By CoachChoose your preferred',
   TOPIC = 'By TopicChoose learning topic',
   TIME = 'By Date & TimeChoose schedule',
+  BULK_COACH = 'Bulk Booking By CoachSelect a',
 }
 
-export class BookingSession {
+export class BookingOnlineSession {
   page: Page;
 
   planning: Locator;
@@ -214,11 +215,11 @@ export class BookingSession {
     return Promise.race([
       this.notificationSuccess
         .first()
-        .waitFor({ state: 'visible', timeout: 14000 })
+        .waitFor({ state: 'visible', timeout: 23000 })
         .then(() => 'success' as const)
         .catch(() => 'timeout' as const),
       this.headTextElementFailedBook
-        .waitFor({ state: 'visible', timeout: 14000 })
+        .waitFor({ state: 'visible', timeout: 23000 })
         .then(() => 'failed' as const)
         .catch(() => 'timeout' as const),
     ]);
@@ -405,7 +406,7 @@ export class BookingSession {
           .then(() => true)
           .catch(() => false);
         if (!calendarVisible) {
-          // Masih di halaman Coach Selection, klik Back sekali lagi
+ 
           await this.btnBackForm.click();
           await this.page
             .getByRole('gridcell', { name: dateRegex })
@@ -419,6 +420,129 @@ export class BookingSession {
       throw new Error(`Timeout menunggu hasil booking pada tanggal ${currentDate}.`);
     }
     throw new Error(`Tidak ada tanggal tersedia setelah ${maxAttempts} percobaan.`);
+  }
+
+  async bookBulkByCoach(dates: number[], times: string[]): Promise<void> {
+
+    await this.page.evaluate(() => window.scrollBy(0, 500));
+    
+    const bulkMethod = this.page.getByText(Method.BULK_COACH).first();
+    await bulkMethod.waitFor({ state: 'visible', timeout: 5000 });
+    await bulkMethod.click();
+
+    await this.selectCoachBtn.first().waitFor({ state: 'visible', timeout: 5000 });
+    await this.selectCoachBtn.first().click();
+
+    let lastSelectedDate = -1;
+
+
+    for (let i = 0; i < dates.length; i++) {
+      let currentDate = dates[i];
+
+      if (lastSelectedDate !== -1 && currentDate <= lastSelectedDate) {
+         currentDate = lastSelectedDate + 1;
+      }
+      
+      let movedToNextMonth = false;
+      let success = false;
+      let maxAttempts = 31;
+
+      for (let attempt = 0; attempt < maxAttempts; attempt++) {
+        console.log(`[Bulk - Attempt ${attempt + 1}] Mencoba tanggal: ${currentDate} untuk slot: ${times[i]}`);
+        
+        const dateStr = currentDate.toString().split('').join('\\s*');
+        const dateRegex = new RegExp(`^${dateStr}(\\s|$)`);
+        const dateCells = this.page.getByRole('gridcell', { name: dateRegex });
+        
+        const count = await dateCells.count();
+        if (count === 0) {
+          if (!movedToNextMonth) {
+            console.log(`Tanggal ${currentDate} tidak ditemukan, pindah ke bulan berikutnya...`);
+            await this.nextMonthBtn.click();
+            await this.page.waitForTimeout(500); 
+            movedToNextMonth = true;
+            currentDate = 1;
+            continue;
+          }
+          throw new Error(`Tanggal ${currentDate} tidak ditemukan setelah pindah bulan.`);
+        }
+        
+
+        let validCell = null;
+        for (let j = 0; j < count; j++) {
+          if (!(await dateCells.nth(j).isDisabled())) {
+            validCell = dateCells.nth(j);
+            break;
+          }
+        }
+        
+        if (!validCell) {
+          console.log(`Tanggal ${currentDate} disabled, mencoba hari berikutnya...`);
+          currentDate++;
+          continue;
+        }
+
+        // Klik tanggal
+        await validCell.click();
+        await this.page.waitForTimeout(500); // Tunggu UI waktu muncul
+        
+        // Berdasarkan interaksi UI, jika ini adalah tanggal kedua/ketiga, 
+        // kita mungkin perlu menggeser slider waktu untuk melihat slot tanggal ini.
+        if (i > 0) {
+           const nextBtn = this.page.getByRole('button').filter({ hasText: /^$/ }).nth(4);
+           // Hanya klik jika tombol next tersedia
+           if (await nextBtn.isVisible()) {
+             await nextBtn.click();
+             await this.page.waitForTimeout(500);
+           }
+        }
+
+        // Cek apakah waktu tersedia
+        const slotWaktu = this.page.getByRole('button', { name: new RegExp(times[i]) });
+        const slotVisible = await slotWaktu.first()
+          .waitFor({ state: 'visible', timeout: 3000 })
+          .then(() => true)
+          .catch(() => false);
+
+        if (!slotVisible) {
+          console.log(`Tanggal ${currentDate}: tidak ada slot waktu "${times[i]}", membatalkan tanggal ini...`);
+          // Un-click tanggal yang tidak memiliki waktu yang valid
+          await validCell.click();
+          await this.page.waitForTimeout(500);
+          
+          currentDate++;
+          continue;
+        }
+
+        // Klik slot waktu
+        await slotWaktu.first().click();
+        success = true;
+        lastSelectedDate = currentDate; // Simpan tanggal yang sukses agar iterasi berikutnya tidak bentrok
+        break; // Lanjut ke jadwal berikutnya (i+1)
+      }
+
+      if (!success) {
+        throw new Error(`Tidak ada tanggal & waktu yang tersedia untuk permintaan ke-${i + 1}`);
+      }
+    }
+
+    // 3. Konfirmasi Bulk Booking
+    await this.page.getByRole('button', { name: 'Confirm Bulk Booking' }).click();
+    
+    // 4. Konfirmasi di modal
+    await this.modalConfirm.waitFor({ state: 'visible', timeout: 8000 }).catch(async () => {
+      await this.page.getByRole('button', { name: 'Confirm Bulk Booking' }).click();
+    });
+    await this.confirmBtn.click();
+
+    // 5. Tunggu hasil booking
+    const result = await this._waitBookingResult();
+    if (result === 'success') {
+      console.log(`✅ Bulk Booking berhasil!`);
+      return;
+    }
+    
+    throw new Error('Bulk booking gagal atau timeout.');
   }
 
   async selectDate(date: number): Promise<void> {
