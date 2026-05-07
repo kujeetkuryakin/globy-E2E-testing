@@ -55,79 +55,50 @@ export default defineConfig({
     },
 
     {
-
-      name: 'setup-admin',
-      testMatch: /setup\/admin\.setup\.ts/,
-    },
-    {
-      name: 'setup-coach',
-      testMatch: /setup\/coach\.setup\.ts/,
-    },
-    {
-      name: 'setup-mentee',
-      testMatch: /setup\/mentee\.setup\.ts/,
-    },
-
-    {
       name: 'admin',
-      use: { storageState: 'storage/admin.json' },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/admin.json',
+      },
       dependencies: ['setup-admin'],
     },
     {
       name: 'coach',
-      use: { storageState: 'storage/coach.json' },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/coach.json',
+      },
       dependencies: ['setup-coach'],
     },
-
     {
       name: 'mentee',
-      use: { storageState: 'storage/mentee.json' },
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/mentee.json',
+      },
       dependencies: ['setup-mentee'],
     },
-
-    {
-      name: 'admin',
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'storage/admin.json'
-      },
-    },
-
-    {
-      name: 'coach',
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'storage/coach.json'
-      },
-    },
-
-    {
-      name: 'mentee',
-      use: {
-        ...devices['Desktop Chrome'],
-        storageState: 'storage/mentee.json'
-      },
-    },
-    /* Test against mobile viewports. */
-    // {
-    //   name: 'Mobile Chrome',
-    //   use: { ...devices['Pixel 5'] },
-    // },
-    // {
-    //   name: 'Mobile Safari',
-    //   use: { ...devices['iPhone 12'] },
-    // },
-
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
   ],
+  /* Test against mobile viewports. */
+  // {
+  //   name: 'Mobile Chrome',
+  //   use: { ...devices['Pixel 5'] },
+  // },
+  // {
+  //   name: 'Mobile Safari',
+  //   use: { ...devices['iPhone 12'] },
+  // },
+
+  /* Test against branded browsers. */
+  // {
+  //   name: 'Microsoft Edge',
+  //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
+  // },
+  // {
+  //   name: 'Google Chrome',
+  //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
+  // },
+
 
   /* Run your local dev server before starting the tests */
   // webServer: {
