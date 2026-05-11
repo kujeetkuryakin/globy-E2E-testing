@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
-import { BookingOnlineSession, CoachForm } from '../../pages/mentee/bookingonlinesession';
+import { LoginPage } from '../../../pages/shared/login.page';
+import { BookingOnlineSession, CoachForm } from '../../../pages/mentee/bookingonlinesession';
 
 test('Positive Test: Booking Session Online By Coach', async ({ page }) => {
   test.setTimeout(40000);
@@ -15,7 +15,7 @@ test('Positive Test: Booking Session Online By Coach', async ({ page }) => {
   };
 
   await login.goto();
-  await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
+  await login.login('ahmadzyddannashevy@gmail.com', 'Password123_');
   await page.goto('/dashboard');
   await booking.bookMode(true);
   await booking.bookByCoach(form);
