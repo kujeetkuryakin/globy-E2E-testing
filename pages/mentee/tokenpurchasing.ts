@@ -4,7 +4,9 @@ export class TokenPurchasing {
   readonly page: Page;
 
   readonly myTokensLink: Locator;
+  readonly purchaseTokensMenu: Locator;
   readonly buyMoreBtn: Locator;
+  readonly offlinePackagesTab: Locator;
   readonly selectPackageBtn: Locator;
 
   readonly proceedToPaymentBtn: Locator;
@@ -18,12 +20,16 @@ export class TokenPurchasing {
   readonly goToMyTokensBtn: Locator;
 
   readonly totalTokenText: Locator;
+  readonly headingConfirmToken: Locator;
+  readonly dialogConfirmToken: Locator;
 
   constructor(page: Page) {
     this.page = page;
 
     this.myTokensLink = page.getByRole('link', { name: 'My Tokens' });
+    this.purchaseTokensMenu = page.getByRole('link', { name: 'Purchase Tokens' });
     this.buyMoreBtn = page.getByRole('button', { name: 'Buy More Tokens' });
+    this.offlinePackagesTab = page.getByRole('tab', { name: 'Offline Packages' });
     this.selectPackageBtn = page.getByRole('button', { name: 'Select Package' });
     this.totalTokenText = page
       .locator('div')
@@ -36,6 +42,8 @@ export class TokenPurchasing {
     this.bankTransferOption = page.getByTestId('payment-channel-list-bank-transfer');
     this.bcaOption = page.getByTestId('payment-channel-bca');
     this.simulatePaymentBtn = page.getByTestId('simulate-button');
+    this.headingConfirmToken = page.getByRole('heading', { name: 'Confirm Token Package Purchase' });
+    this.dialogConfirmToken = page.getByRole('dialog', { name: 'Confirm Token Package Purchase' });
 
     this.successHeading = page.getByText(/Payment Successful!/i);
     this.goToMyTokensBtn = page.getByRole('button', { name: 'Go to My Tokens' });
@@ -43,6 +51,10 @@ export class TokenPurchasing {
 
   async navigateToTokens() {
     await this.myTokensLink.click();
+  }
+
+  async navigateToPurchaseMenu() {
+    await this.purchaseTokensMenu.click();
   }
 
   /**
@@ -53,11 +65,19 @@ export class TokenPurchasing {
     await this.selectPackageBtn.nth(index).click();
   }
 
+  async selectOfflinePackage(index: number = 0) {
+    await this.offlinePackagesTab.click();
+    await this.selectPackageBtn.nth(index).click();
+  }
+
   async agreeAndCheckout() {
     await this.proceedToPaymentBtn.click();
+    await this.headingConfirmToken.waitFor({state: 'visible'});
+    await this.dialogConfirmToken.waitFor({state: 'visible'});
 
     await this.tncCheckbox.waitFor({ state: 'visible' });
     await this.tncCheckbox.click();
+    await this.proceedToPaymentBtn.waitFor({state: 'visible'});
     await this.proceedToPaymentBtn.click();
   }
 
