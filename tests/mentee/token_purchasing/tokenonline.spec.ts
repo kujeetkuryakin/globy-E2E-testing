@@ -7,7 +7,7 @@ test.describe('Feature: Token Purchasing', () => {
     const login = new LoginPage(page);
     await login.goto();
 
-    await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
+    await login.login('vladimirbatface@gmail.com', 'Password123_');
     await page.goto('/dashboard');
   });
 
