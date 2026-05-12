@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { BookingOnlineSession } from '../../pages/mentee/bookingonlinesession';
-import { LoginPage } from '../../pages/shared/login.page';
+import { BookingOnlineSession } from '../../../pages/mentee/bookingonlinesession';
+import { LoginPage } from '../../../pages/shared/login.page';
 
 test('Bulk booking by coach', async ({ page }) => {
   test.setTimeout(140000);
@@ -9,7 +9,7 @@ test('Bulk booking by coach', async ({ page }) => {
   const bookingSession = new BookingOnlineSession(page);
   
   await login.goto();
-  await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
+  await login.login('ahmadzyddannashevy@gmail.com', 'Password123_');
 
   await bookingSession.bookMode(true);
   

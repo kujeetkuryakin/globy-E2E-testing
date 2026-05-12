@@ -1,6 +1,6 @@
 import { test } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
-import { BookingOfflineSession, OfflineTopicForm } from '../../pages/mentee/bookingofflinesession';
+import { LoginPage } from '../../../pages/shared/login.page';
+import { BookingOfflineSession, OfflineTopicForm } from '../../../pages/mentee/bookingofflinesession';
 
 test('Booking Offline Session By Topic', async ({ page }) => {
   test.setTimeout(120000);
@@ -19,7 +19,7 @@ test('Booking Offline Session By Topic', async ({ page }) => {
   };
 
   await login.goto();
-  await login.login('mentee_1776666826136@mail.com', 'Asaa@3579');
+  await login.login('ahmadzyddannashevy@gmail.com', 'Password123_');
 
   await booking.bookMode();
   await booking.selectOffice(form.office);

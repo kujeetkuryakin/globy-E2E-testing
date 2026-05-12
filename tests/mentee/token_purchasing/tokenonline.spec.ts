@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
-import { TokenPurchasing } from '../../pages/mentee/tokenpurchasing';
+import { LoginPage } from '../../../pages/shared/login.page';
+import { TokenPurchasing } from '../../../pages/mentee/tokenpurchasing';
 
 test.describe('Feature: Token Purchasing', () => {
   test.beforeEach(async ({ page }) => {

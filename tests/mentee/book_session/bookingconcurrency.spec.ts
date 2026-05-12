@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../../pages/shared/login.page';
-import { BookingOnlineSession, CoachForm } from '../../pages/mentee/bookingonlinesession';
+import { LoginPage } from '../../../pages/shared/login.page';
+import { BookingOnlineSession, CoachForm } from '../../../pages/mentee/bookingonlinesession';
 
 test('Simulasi Race Condition: 2 User Berebut 1 Slot Jadwal', async ({ browser }) => {
   const context1 = await browser.newContext();
