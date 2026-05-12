@@ -1,7 +1,9 @@
 import { test, expect } from '@playwright/test';
 import { BookSessionPage } from '../../pages/admin/booksinglesession.ts';
 
-test('admin booking session for mentee', async ({ page }) => {
+test('admin booking single session for mentee with auto-retry date', async ({ page }) => {
+    test.setTimeout(200000); // Timeout lebih panjang karena ada loop pencarian slot (max 60 hari × 2s)
+
     const bookingPage = new BookSessionPage(page);
 
     await page.goto('/admin-dashboard');
@@ -12,7 +14,8 @@ test('admin booking session for mentee', async ({ page }) => {
 
     await bookingPage.chooseOnlineSession();
 
-    await bookingPage.selectCoach();
+    // Pilih Coach Elayne dengan fitur pencarian (sama seperti multiple session)
+    await bookingPage.selectCoach('ela', /Coach Elayne/);
 
     await bookingPage.selectMentee('daf');
 
@@ -24,15 +27,18 @@ test('admin booking session for mentee', async ({ page }) => {
 
     await bookingPage.selectRegularType();
 
-    const bookingDate = await bookingPage.selectDynamicDate();
+    // Auto-retry cari tanggal yang available mulai dari hari ini + 1
+    // Ganti tanggal start sesuai kebutuhan
+    const today = new Date();
+    today.setDate(today.getDate() + 1);
+    const startDate = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
 
-    await bookingPage.selectTime('16:');
+    // Tidak perlu tentukan jam spesifik — otomatis pilih jam pertama yang tersedia
+    const bookingDate = await bookingPage.selectDateAndTimeWithRetry(startDate);
 
     await bookingPage.submit();
 
-    console.log(`Booking date used: ${bookingDate}`);
+    console.log(`✅ Booking berhasil pada tanggal: ${bookingDate}`);
 
-    await expect(
-        bookingPage.successNotif
-    ).toBeVisible();
+    await bookingPage.verifySuccess();
 });
