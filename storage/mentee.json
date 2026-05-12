@@ -11,6 +11,9 @@
       "sameSite": "None"
     }
   ],
+<<<<<<< HEAD
+  "origins": []
+=======
   "origins": [
     {
       "origin": "https://globy.wins.web.id",
@@ -30,4 +33,5 @@
       ]
     }
   ]
+>>>>>>> 9c8ed38f629d4100d9e21b303096e64098e72c41
 }
