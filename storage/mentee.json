@@ -1,7 +1,4 @@
 {
-<<<<<<< HEAD
-  "cookies": [],
-=======
   "cookies": [
     {
       "name": "SITE_TOTAL_ID",
@@ -14,6 +11,5 @@
       "sameSite": "Lax"
     }
   ],
->>>>>>> 63c762b (edit login session)
   "origins": []
 }
