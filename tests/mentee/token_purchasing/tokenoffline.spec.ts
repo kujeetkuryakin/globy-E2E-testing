@@ -6,9 +6,9 @@ test('Purchase Offline Token via Bank Transfer', async ({ page }) => {
   test.setTimeout(80000);
   const login = new LoginPage(page);
   const tokenPurchasing = new TokenPurchasing(page);
-  
+
   await login.goto();
-  await login.login('ahmadzyddannashevy@gmail.com', 'Password123_');
+  await login.login('vladimirbatface@gmail.com', 'Password123_');
 
   await tokenPurchasing.navigateToPurchaseMenu();
   await tokenPurchasing.selectOfflinePackage(1);
