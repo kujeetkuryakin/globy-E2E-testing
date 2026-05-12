@@ -1,16 +1,27 @@
 {
-  "cookies": [],
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": "ku4ogvgm1hOwQ_wY0rKkDQzwWsPBpzLenmn7AMVJu1A-1778562377.4640093-1.0.1.1-wGDTsebRNtrpBS.I5T9Y15VT8BOzvc.yUF7B5VLyhKlZggpKPIRalN4FvVw2eFMl4V3LIP02IrWPGyyi6EYHaEdomFPfpbXc._2sibddnV3mSrtg7aAj7dNuWm8fr7Ad",
+      "domain": ".replit.com",
+      "path": "/",
+      "expires": 1778564177.694685,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
   "origins": [
     {
       "origin": "https://globy.wins.web.id",
       "localStorage": [
         {
           "name": "auth_token",
-          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk2NjUyMTIwNCIsImVtYWlsIjoicmFuaWFhdGhhbGxhYWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IlJhbmlhIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc4MTQxMjU1LCJleHAiOjE3NzgyMjc2NTV9.signature"
+          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk2NjUyMTIwNCIsImVtYWlsIjoicmFuaWFhdGhhbGxhYWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQWRtaW4iLCJsYXN0TmFtZSI6IlJhbmlhIiwicm9sZSI6IkFETUlOIiwiaWF0IjoxNzc4NTYyMzc5LCJleHAiOjE3Nzg2NDg3Nzl9.signature"
         },
         {
           "name": "globy_token_expires",
-          "value": "1778227655767"
+          "value": "1778648779345"
         },
         {
           "name": "globy_user",
