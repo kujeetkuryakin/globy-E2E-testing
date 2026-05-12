@@ -23,4 +23,13 @@ export class LoginPage {
         await this.passwordInput.fill(password);
         await this.signInBtn.click();
     }
+
+    async logout() {
+        await this.page.getByRole('button', { name: 'Logout' }).click();
+    }
+
+    async getErrorMessage() {
+        this.page.getByRole('alert').waitFor({ state: 'visible' , timeout: 5000})
+        return this.page.getByRole('alert').first();
+    }
 }

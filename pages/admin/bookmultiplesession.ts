@@ -88,25 +88,11 @@ export class BookMultipleSessionPage {
 
       console.log(`[Session ${index + 1}] Mencoba tanggal: ${dateStr} untuk jam: ${timePattern}`);
 
-      // Cari input tanggal berdasarkan index
-      // Berdasarkan script awal, input tanggal menggunakan getByRole('textbox').nth(index)
       const dateInput = this.page.getByRole('textbox').nth(index);
       await dateInput.fill(dateStr);
       
-      // Tunggu sesaat agar UI merender checkbox jam
       await this.page.waitForTimeout(3000);
 
-      // Cari checkbox jam untuk tanggal yang baru diisi
-      // Catatan: Jika ada banyak checkbox di layar (karena ada baris lain), 
-      // kita harus pastikan checkbox yang kita target adalah milik index ini.
-      // Di script awal user menggunakan: getByRole('checkbox', { name: '10:' }).nth(1) untuk baris kedua.
-      // Jadi kita gunakan .nth(index) jika ada kemungkinan jam yang sama dicari di baris berbeda.
-      // Namun agar lebih aman, kita tunggu checkbox-nya.
-      
-      // Karena Playwright bisa kebingungan jika ada checkbox yang sama di baris sebelumnya,
-      // kita perlu mencari checkbox tersebut di dalam "konteks" barisnya jika bisa.
-      // Namun, jika UI merender checkbox berdasarkan baris, kita asumsikan getByRole().nth(index) atau mencari dengan spesifik bisa berhasil.
-      
       // Pendekatan: cari locator checkbox
       const timeCheckbox = this.page.getByRole('checkbox', { name: timePattern });
       
