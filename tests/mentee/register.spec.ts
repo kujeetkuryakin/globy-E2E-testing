@@ -23,17 +23,15 @@ test.describe('Mentee Registration Scenarios', () => {
 
     await registerPage.submit();
 
-    // Verifikasi pesan error muncul
     const errorMsg = await registerPage.page.getByText('Passwords do not match').first();
     await expect(errorMsg).toBeVisible();
   });
 
   test('Negative: Register with existing email', async ({ page }) => {
-    // Gunakan email yang dipastikan sudah terdaftar
     await registerPage.fillForm({
       firstName: 'Ahmad',
       lastName: 'Zyddan',
-      email: 'ahmadzyddannashevy@gmail.com', // Asumsi email ini sudah ada dari test sebelumnya
+      email: 'ahmadzyddannashevy@gmail.com',
       whatsapp: '081226067611',
       password: 'Ahmad@3447',
       confirmPassword: 'Ahmad@3447',
@@ -42,21 +40,18 @@ test.describe('Mentee Registration Scenarios', () => {
 
     await registerPage.submit();
 
-    // Verifikasi error email exist
-    // Teks spesifik tergantung dari API Globy, contoh 'Email already exists' atau 'taken'
     const errorMsg = await registerPage.getErrorMessageEmail();
     await expect(errorMsg).toBeVisible();
   });
 
   test('Negative: Register with existing phone number', async ({ page }) => {
-    // Generate email unik agar tidak kena validasi email
     const uniqueEmail = `test_phone_${Date.now()}@gmail.com`;
 
     await registerPage.fillForm({
       firstName: 'Ahmad',
       lastName: 'PhoneTest',
       email: uniqueEmail,
-      whatsapp: '081226067619', // Nomor yang sudah terpakai
+      whatsapp: '081226067619', 
       password: 'Ahmad@3447',
       confirmPassword: 'Ahmad@3447',
       agreeTerms: true,
@@ -64,15 +59,13 @@ test.describe('Mentee Registration Scenarios', () => {
 
     await registerPage.submit();
 
-    // Verifikasi error phone number exist
     const errorMsg = await registerPage.getErrorMessagePhone();
     await expect(errorMsg).toBeVisible();
   });
 
   test('Positive: Register successfully and select token package', async ({ page }) => {
-    test.setTimeout(120000); // Set timeout lebih panjang karena ada flow payment
-
-    // Generate data unik agar selalu sukses
+    test.setTimeout(120000); 
+    
     const uniqueTimestamp = Date.now();
     const uniqueEmail = `rezaarab_${uniqueTimestamp}@gmail.com`;
     const uniquePhone = `0812${uniqueTimestamp.toString().slice(-8)}`;
@@ -89,10 +82,8 @@ test.describe('Mentee Registration Scenarios', () => {
 
     await registerPage.submit();
 
-    // Lanjutkan ke pemilihan token package dan simulasi bank transfer
     await registerPage.purchaseTokenPackage();
 
-    // Verifikasi berada di halaman token
     await expect(page).toHaveURL(/.*token/i);
   });
 });
