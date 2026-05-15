@@ -54,30 +54,30 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
 
-    // {
-    //   name: 'admin',
-    //   use: {
-    //     ...devices['Desktop Chrome'],
-    //     storageState: 'storage/admin.json',
-    //   },
-    //   dependencies: ['setup-admin'],
-    // },
-    // {
-    //   name: 'coach',
-    //   use: {
-    //     ...devices['Desktop Chrome'],
-    //     storageState: 'storage/coach.json',
-    //   },
-    //   dependencies: ['setup-coach'],
-    // },
-    // {
-    //   name: 'mentee',
-    //   use: {
-    //     ...devices['Desktop Chrome'],
-    //     storageState: 'storage/mentee.json',
-    //   },
-    //   dependencies: ['setup-mentee'],
-    // },
+    {
+      name: 'admin',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/admin.json',
+      },
+      dependencies: ['setup-admin'],
+    },
+    {
+      name: 'coach',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/coach.json',
+      },
+      dependencies: ['setup-coach'],
+    },
+    {
+      name: 'mentee',
+      use: {
+        ...devices['Desktop Chrome'],
+        storageState: 'storage/mentee.json',
+      },
+      dependencies: ['setup-mentee'],
+    },
   ],
   /* Test against mobile viewports. */
   // {
@@ -98,7 +98,6 @@ export default defineConfig({
   //   name: 'Google Chrome',
   //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
   // },
-
 
   /* Run your local dev server before starting the tests */
   // webServer: {
