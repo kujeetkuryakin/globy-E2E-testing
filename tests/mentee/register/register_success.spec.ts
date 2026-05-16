@@ -1,11 +1,14 @@
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../../../pages/mentee/register';
+import { LoginPage } from '../../../pages/shared/login.page';
 
 test('Positive: Register successfully and select token package', async ({ page }) => {
   test.setTimeout(120000);
 
   const registerPage = new RegisterPage(page);
-  await registerPage.goto();
+  const loginPage = new LoginPage(page);
+
+  await loginPage.goto();
   await registerPage.openRegistrationForm();
 
   const uniqueTimestamp = Date.now();

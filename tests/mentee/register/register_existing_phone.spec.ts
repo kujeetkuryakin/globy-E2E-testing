@@ -1,9 +1,12 @@
 import { test, expect } from '@playwright/test';
 import { RegisterPage } from '../../../pages/mentee/register';
+import { LoginPage } from '../../../pages/shared/login.page';
 
 test('Negative: Register with existing phone number', async ({ page }) => {
   const registerPage = new RegisterPage(page);
-  await registerPage.goto();
+  const loginPage = new LoginPage(page);
+
+  await loginPage.goto();
   await registerPage.openRegistrationForm();
 
   const uniqueEmail = `test_phone_${Date.now()}@gmail.com`;

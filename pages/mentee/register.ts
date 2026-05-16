@@ -3,7 +3,7 @@ import { Locator, Page, expect } from '@playwright/test';
 export class RegisterPage {
   readonly page: Page;
 
-  readonly enrollNowBtn: Locator;
+  readonly registerBtn: Locator;
   readonly firstNameInput: Locator;
   readonly lastNameInput: Locator;
   readonly emailInput: Locator;
@@ -24,7 +24,7 @@ export class RegisterPage {
   constructor(page: Page) {
     this.page = page;
 
-    this.enrollNowBtn = page.getByRole('button', { name: 'Enroll Now' });
+    this.registerBtn = page.getByText('Register');
     this.firstNameInput = page.getByRole('textbox', { name: 'First Name' });
     this.lastNameInput = page.getByRole('textbox', { name: 'Last Name' });
     this.emailInput = page.getByRole('textbox', { name: 'Email Address' });
@@ -43,12 +43,9 @@ export class RegisterPage {
     this.goToMyTokensBtn = page.getByRole('button', { name: 'Go to My Tokens' });
   }
 
-  async goto() {
-    await this.page.goto('/');
-  }
-
   async openRegistrationForm() {
-    await this.enrollNowBtn.click();
+    await this.registerBtn.first().waitFor({ state: 'visible', timeout: 5000 });
+    await this.registerBtn.first().click();
   }
 
   async fillForm(data: any) {
@@ -76,8 +73,11 @@ export class RegisterPage {
   }
 
   async getErrorMessagePassword() {
-    this.page.getByText('Passwords do not match').waitFor({ state: 'visible', timeout: 5000 });
-    return this.page.getByText('Passwords do not match').first();
+    await this.page
+      .getByRole('alert')
+      .getByText('Passwords do not match')
+      .waitFor({ state: 'visible', timeout: 7000 });
+    return this.page.getByRole('alert').getByText('Passwords do not match').first();
   }
 
   async getErrorMessagePhone() {
