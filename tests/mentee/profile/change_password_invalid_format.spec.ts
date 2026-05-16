@@ -12,7 +12,19 @@ test('Negative: Mentee change password with invalid format', async ({ page }) =>
   await profilePage.goto();
 
   await profilePage.changePassword('Password123_', 'sandi123', 'sandi123');
-  
+
+  const successMsg = page.getByText('Password changed successfully').first();
+
+  try {
+    await expect(successMsg).not.toBeVisible({ timeout: 4000 });
+  } catch (e) {
+    await profilePage.changePassword('sandi123', 'Password123_', 'Password123_');
+
+    throw new Error(
+      "PENGUJIAN GAGAL (DIHARAPKAN): Web Globy saat ini tidak memvalidasi format keamanan password. Password lemah ('sandi123') berhasil tersimpan padahal seharusnya ditolak oleh sistem.",
+    );
+  }
+
   const errorMsg = await profilePage.getPasswordErrorMessage();
-  await expect(errorMsg).toBeVisible();
+  await expect(errorMsg, 'Pesan Error Format Password Tidak Muncul').toBeVisible();
 });
