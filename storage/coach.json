@@ -1,38 +1,4 @@
 {
-<<<<<<< HEAD
   "cookies": [],
   "origins": []
-=======
-  "cookies": [
-    {
-      "name": "SITE_TOTAL_ID",
-      "value": "aeewH4Ta02gQXtxdDHIiBgAAgRA",
-      "domain": "globy.wins.web.id",
-      "path": "/",
-      "expires": 1808327584.069396,
-      "httpOnly": true,
-      "secure": false,
-      "sameSite": "Lax"
-    }
-  ],
-  "origins": [
-    {
-      "origin": "https://globy.wins.web.id",
-      "localStorage": [
-        {
-          "name": "auth_token",
-          "value": "jwt.eyJzdWIiOiJjb2FjaC0xNzY1MzMwOTE4NzkwIiwiZW1haWwiOiJlbGF5bmUuc2VsbWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQ29hY2giLCJsYXN0TmFtZSI6IkVsYXluZSIsInJvbGUiOiJDT0FDSCIsImlhdCI6MTc3Njc5MTU4NiwiZXhwIjoxNzc2ODc3OTg2fQ==.signature"
-        },
-        {
-          "name": "globy_token_expires",
-          "value": "1776877987027"
-        },
-        {
-          "name": "globy_user",
-          "value": "{\"id\":\"coach-1765330918790\",\"email\":\"elayne.selma@gmail.com\",\"firstName\":\"Coach\",\"lastName\":\"Elayne\",\"name\":\"Coach Elayne\",\"phone\":\"6281935923976\",\"bio\":\"Prestigious Achievement\\n1. Board of Director-UNFCCC Asia Youth International MUN 2024 Virtual Conference\\n2. Board of Dais- WHO Council International MUN Jakarta 2022\\n3. Co-Chair-UNEP  Council Diplomacy Studies MUN Yogyakarta 2023\\n4. Honorable Mention&Best Position Paper- UNESCO Council Surabaya MUN 2025\\n5. Best Position Paper-ISA Council ESOF MUN 2025\\n\\nShort Bio\\nCoach Elayne  is a professional coach  with strong experience in Model United Nations (MUN), where she has actively engaged in diplomacy, policy analysis, and structured debate. Through MUN, she has developed skills in public speaking, negotiation, resolution drafting, and multilateral problem-solving. She is currently a Master’s degree student in Business Administration at Universitas Padjadjaran, focusing on strategic thinking, organizational management, and evidence-based decision making. Known for her structured approach and clear communication style.\",\"location\":\"\",\"timezone\":\"Asia/Jakarta\",\"role\":\"COACH\",\"isActive\":true,\"isVerified\":false,\"profileImageUrl\":\"/uploads/profile-mentee-1758966521204-1776661806348-18197424.jpeg\",\"createdAt\":\"2025-12-10T01:41:58.790Z\",\"updatedAt\":\"2026-04-20T05:10:07.795Z\",\"totalSessions\":494,\"totalHours\":494,\"specialty\":\"General Coaching, Public Speaking, Speech, Model United Nations (MUN), Paper\",\"experience\":\"5+ years\",\"hourlyRate\":\"12.00\",\"sessionTopics\":\"Model United Nations (MUN), Public Speaking, Speech, Paper\",\"sessionMode\":\"hybrid\",\"meetingRoom\":\"Breakout Room 23\",\"meetingLocations\":[],\"referralCode\":\"REF-COACH-1MCQ9B\",\"referralLink\":\"/register?ref=REF-COACH-1MCQ9B\"}"
-        }
-      ]
-    }
-  ]
->>>>>>> 63c762b (edit login session)
 }

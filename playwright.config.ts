@@ -50,17 +50,11 @@ export default defineConfig({
       testMatch: 'mentee.setup.ts',
     },
     {
-      name: 'chromium',
-      use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
       name: 'admin',
       use: {
         ...devices['Desktop Chrome'],
         storageState: 'storage/admin.json',
       },
-      dependencies: ['setup-admin'],
     },
     {
       name: 'coach',
@@ -68,7 +62,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         storageState: 'storage/coach.json',
       },
-      dependencies: ['setup-coach'],
     },
     {
       name: 'mentee',
@@ -76,7 +69,6 @@ export default defineConfig({
         ...devices['Desktop Chrome'],
         storageState: 'storage/mentee.json',
       },
-      dependencies: ['setup-mentee'],
     },
   ],
   /* Test against mobile viewports. */

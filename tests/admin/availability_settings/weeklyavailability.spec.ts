@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { AvailabilityPage } from '../../pages/admin/weeklyavailability';
+import { AvailabilityPage } from '../../../pages/admin/weeklyavailability';
 
 test('admin set availability success', async ({ page }) => {
     const availability = new AvailabilityPage(page);

@@ -7,8 +7,9 @@ setup('mentee login once', async ({ page }) => {
     await login.goto();
     await login.login('vladimirbatface@gmail.com', 'Password123_');
 
-    await page.waitForURL('**/dashboard**', { timeout: 15000 }).catch(() => { });
-    await expect(page.getByRole('navigation').first()).toBeVisible();
+    await page.waitForURL(/dashboard/);
+    await page.waitForLoadState('domcontentloaded');
+    await page.waitForTimeout(3000);
 
     await page.context().storageState({ path: 'storage/mentee.json' });
 });

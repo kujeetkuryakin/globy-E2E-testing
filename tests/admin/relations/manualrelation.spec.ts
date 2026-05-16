@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { ManualRelationPage } from '../../pages/admin/manualrelation';
+import { ManualRelationPage } from '../../../pages/admin/manualrelation';
 
 test('Admin can manually assign PIC/Coach to a random Mentee', async ({ page }) => {
     test.setTimeout(60000);

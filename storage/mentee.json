@@ -2,36 +2,32 @@
   "cookies": [
     {
       "name": "__cf_bm",
-      "value": "bQTb8MGGO.2fB3rJiAuq0oz1iOxu_EPq1EqqY2xZD2E-1778566838.4267128-1.0.1.1-YUN7F68QHMo8dqNHpXiVcJbqF54VjSpcC_7Fth8wsxuGm1py_dJorYYDW_7Xt3Oi_3Fmx3TI8tamvhcPi4YdHl2CtPw6Qb6fs5skVQGrwkzyiR4yw0TLQh4HkUOvpfAl",
+      "value": "7VKUgxx3Q5rT7Ur9Ai9NyCD2qQ8zUlzzSYYt9lId1xw-1778908157.159817-1.0.1.1-PzBSfNvjVsyYtUGbvisgzH57.Xbm.oVmTH5WKrO137BScS1oiKmKS6u98Gynxc7KDSLGvzcQjLbybw_QBLR72kc9RztkhGjvi1K5b2s1Yr4ziH.yBT6F7Dy0ShNbe3d2",
       "domain": ".replit.com",
       "path": "/",
-      "expires": 1778568638.619381,
+      "expires": 1778909957.351975,
       "httpOnly": true,
       "secure": true,
       "sameSite": "None"
     }
   ],
-<<<<<<< HEAD
-  "origins": []
-=======
   "origins": [
     {
       "origin": "https://globy.wins.web.id",
       "localStorage": [
         {
           "name": "auth_token",
-          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk1NDUzMDQ1NSIsImVtYWlsIjoidmxhZGltaXJiYXRmYWNlQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IkdyYWNpZSAiLCJsYXN0TmFtZSI6IkFicmFtcyIsInJvbGUiOiJNRU5URUUiLCJpYXQiOjE3Nzg1NjY4NDAsImV4cCI6MTc3ODY1MzI0MH0=.signature"
+          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk1NDUzMDQ1NSIsImVtYWlsIjoidmxhZGltaXJiYXRmYWNlQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IkdyYWNpZSAiLCJsYXN0TmFtZSI6IkFicmFtcyIsInJvbGUiOiJNRU5URUUiLCJpYXQiOjE3Nzg5MDgxNTgsImV4cCI6MTc3ODk5NDU1OH0=.signature"
         },
         {
           "name": "globy_token_expires",
-          "value": "1778653240483"
+          "value": "1778994570738"
         },
         {
           "name": "globy_user",
-          "value": "{\"id\":\"mentee-1758954530455\",\"email\":\"vladimirbatface@gmail.com\",\"firstName\":\"Gracie \",\"lastName\":\"Abrams\",\"name\":\"Gracie  Abrams\",\"phone\":\"6283833394640\",\"bio\":\"\",\"location\":\"\",\"timezone\":\"Asia/Jakarta\",\"role\":\"MENTEE\",\"isActive\":true,\"isVerified\":false,\"profileImageUrl\":\"\",\"createdAt\":\"2025-09-27T06:28:51.416Z\",\"updatedAt\":\"2026-05-12T06:13:48.414Z\",\"totalSessions\":3,\"totalHours\":3,\"whatsapp\":\"\",\"parentWhatsapp\":\"\",\"address\":\"\",\"province\":\"\",\"city\":\"\",\"district\":\"\",\"village\":\"\",\"postalCode\":\"\",\"detailAddress\":\"\",\"school\":\"\",\"parentName\":\"\",\"schoolWhatsapp\":\"\",\"goals\":null,\"tokenBalance\":0,\"offlineTokenBalance\":0,\"menteeTypes\":[\"regular\"]}"
+          "value": "{\"id\":\"mentee-1758954530455\",\"email\":\"vladimirbatface@gmail.com\",\"firstName\":\"Gracie \",\"lastName\":\"Abrams\",\"role\":\"MENTEE\",\"profileImageUrl\":\"\"}"
         }
       ]
     }
   ]
->>>>>>> 9c8ed38f629d4100d9e21b303096e64098e72c41
 }
