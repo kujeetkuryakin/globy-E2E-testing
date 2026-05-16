@@ -1,33 +1,8 @@
 {
   "cookies": [
-    {
-      "name": "__cf_bm",
-      "value": "7VKUgxx3Q5rT7Ur9Ai9NyCD2qQ8zUlzzSYYt9lId1xw-1778908157.159817-1.0.1.1-PzBSfNvjVsyYtUGbvisgzH57.Xbm.oVmTH5WKrO137BScS1oiKmKS6u98Gynxc7KDSLGvzcQjLbybw_QBLR72kc9RztkhGjvi1K5b2s1Yr4ziH.yBT6F7Dy0ShNbe3d2",
-      "domain": ".replit.com",
-      "path": "/",
-      "expires": 1778909957.351975,
-      "httpOnly": true,
-      "secure": true,
-      "sameSite": "None"
-    }
+    {}
   ],
   "origins": [
-    {
-      "origin": "https://globy.wins.web.id",
-      "localStorage": [
-        {
-          "name": "auth_token",
-          "value": "jwt.eyJzdWIiOiJtZW50ZWUtMTc1ODk1NDUzMDQ1NSIsImVtYWlsIjoidmxhZGltaXJiYXRmYWNlQGdtYWlsLmNvbSIsImZpcnN0TmFtZSI6IkdyYWNpZSAiLCJsYXN0TmFtZSI6IkFicmFtcyIsInJvbGUiOiJNRU5URUUiLCJpYXQiOjE3Nzg5MDgxNTgsImV4cCI6MTc3ODk5NDU1OH0=.signature"
-        },
-        {
-          "name": "globy_token_expires",
-          "value": "1778994570738"
-        },
-        {
-          "name": "globy_user",
-          "value": "{\"id\":\"mentee-1758954530455\",\"email\":\"vladimirbatface@gmail.com\",\"firstName\":\"Gracie \",\"lastName\":\"Abrams\",\"role\":\"MENTEE\",\"profileImageUrl\":\"\"}"
-        }
-      ]
-    }
+    {}
   ]
 }
