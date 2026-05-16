@@ -116,6 +116,10 @@ export class MenteeProfilePage {
     return msg;
   }
 
+  async getPasswordErrorMessage() {
+    return this.page.locator('.text-red-500, [role="alert"]').first();
+  }
+
   async changeEmail(newEmail: string) {
     await this.changeEmailBtn.waitFor({ state: 'visible', timeout: 7000 });
     await this.changeEmailBtn.click();
