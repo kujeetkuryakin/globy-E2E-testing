@@ -7,7 +7,7 @@ test('admin set availability success', async ({ page }) => {
     await page.goto('/admin-dashboard');
     await availability.openAvailabilitySetting();
 
-    await availability.selectCoach('ela');
+    await availability.selectCoach('elay');
     await availability.toggleAvailability(3);
     await availability.save();
 
