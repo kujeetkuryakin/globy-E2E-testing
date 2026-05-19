@@ -1,9 +1,8 @@
 import { test, expect } from '@playwright/test';
-import { CreateMenteeProject } from '../../pages/admin/creatementeeproject';
-import { LoginPage } from '../../pages/shared/login.page';
+import { CreateMenteeProject } from '../../../pages/admin/creatementeeproject';
+import { LoginPage } from '../../../pages/shared/login.page';
 
-test('Positive Test: admin create mentee project success', async ({ page }) => {
-  const login = new LoginPage(page);
+test('admin create mentee project success', async ({ page }) => {
   const userPage = new CreateMenteeProject(page);
 
   const timestamp = Date.now();
@@ -15,15 +14,6 @@ test('Positive Test: admin create mentee project success', async ({ page }) => {
     password: 'Password123_',
   };
 
-
-  await login.goto();
-  await login.login('raniaathallaaa@gmail.com', 'Password123_');
-
-  await userPage.goToUserManagement();
-  await userPage.openCreateUser();
-
-  await page.goto('https://globy.wins.web.id/admin-dashboard');
-
   await page.goto('/admin-dashboard');
   await userPage.goToUserManagement();
   await userPage.openCreateUser();
@@ -31,6 +21,27 @@ test('Positive Test: admin create mentee project success', async ({ page }) => {
   await userPage.fillForm(user);
   await userPage.selectProject();
   await userPage.submit();
+  try {
 
-  await expect(userPage.getSuccessNotification().first()).toBeVisible();
+    await expect(userPage.getSuccessNotification().first())
+      .toBeVisible({ timeout: 5000 });
+
+    console.log('✅ SUCCESS: mentee project berhasil dibuat');
+
+  } catch (error) {
+
+    console.log('❌ FAILED: popup success tidak muncul');
+
+    const currentUrl = page.url();
+    console.log('📍 Current URL:', currentUrl);
+
+    const pageContent = await page.textContent('body');
+    console.log(
+      '📄 Page content snippet:',
+      pageContent?.slice(0, 300)
+    );
+
+    throw error;
+  }
+
 });

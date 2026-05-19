@@ -1,5 +1,5 @@
 import { test } from '@playwright/test';
-import { CoachRelationPage } from '../../pages/admin/hiddencoachrelation';
+import { CoachRelationPage } from '../../../pages/admin/hiddencoachrelation';
 
 /**
  * Test: Hidden coach seharusnya TIDAK memiliki relasi dengan mentee.

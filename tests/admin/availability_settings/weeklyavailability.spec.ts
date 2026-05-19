@@ -1,5 +1,5 @@
 import { test, expect } from '@playwright/test';
-import { AvailabilityPage } from '../../pages/admin/weeklyavailability';
+import { AvailabilityPage } from '../../../pages/admin/weeklyavailability';
 
 test('admin set availability success', async ({ page }) => {
     const availability = new AvailabilityPage(page);
@@ -7,7 +7,7 @@ test('admin set availability success', async ({ page }) => {
     await page.goto('/admin-dashboard');
     await availability.openAvailabilitySetting();
 
-    await availability.selectCoach('ela');
+    await availability.selectCoach('elay');
     await availability.toggleAvailability(3);
     await availability.save();
 

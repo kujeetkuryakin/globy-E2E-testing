@@ -46,10 +46,9 @@ export class BookMultipleSessionPage {
     await this.onlineBtn.first().click(); // Cukup satu kali seperti request user
   }
 
-  async selectCoach(keyword: string, coachNameMatch: string | RegExp) {
+  async selectCoach(coachNameMatch: string | RegExp) {
     await this.chooseCoachBtn.click();
-    await this.page.waitForTimeout(6000); 
-    await this.coachSearchInput.pressSequentially(keyword, { delay: 110 });
+    await this.page.waitForTimeout(6000);
     await this.page.getByRole('option', { name: coachNameMatch }).click();
   }
 
@@ -90,12 +89,12 @@ export class BookMultipleSessionPage {
 
       const dateInput = this.page.getByRole('textbox').nth(index);
       await dateInput.fill(dateStr);
-      
+
       await this.page.waitForTimeout(3000);
 
       // Pendekatan: cari locator checkbox
       const timeCheckbox = this.page.getByRole('checkbox', { name: timePattern });
-      
+
       const checkboxVisible = await timeCheckbox.nth(index).waitFor({ state: 'visible', timeout: 2000 })
         .then(() => true)
         .catch(() => false);

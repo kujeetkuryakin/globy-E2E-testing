@@ -1,0 +1,33 @@
+{
+  "cookies": [
+    {
+      "name": "__cf_bm",
+      "value": "ayQqrFyeZAChO8556HfaiEhwez6gU5UiZ18YylgamI8-1779176948.7062025-1.0.1.1-mQg5xM7fLVOySyxr30L1ENR_R5RnyZWadvmP68lK0QK7LCRiv1yK2rRq1LghTJsbDhcb9LxO6zvl7sH.wWOc.uKebNCmbgUOiWSkYDHSgXysUCkllmBfsLPvIPsoUUUh",
+      "domain": ".replit.com",
+      "path": "/",
+      "expires": 1779178747.630228,
+      "httpOnly": true,
+      "secure": true,
+      "sameSite": "None"
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://globy.wins.web.id",
+      "localStorage": [
+        {
+          "name": "auth_token",
+          "value": "jwt.eyJzdWIiOiJjb2FjaC0xNzY1MzMwOTE4NzkwIiwiZW1haWwiOiJlbGF5bmUuc2VsbWFAZ21haWwuY29tIiwiZmlyc3ROYW1lIjoiQ29hY2giLCJsYXN0TmFtZSI6IkVsYXluZSIsInJvbGUiOiJDT0FDSCIsImlhdCI6MTc3OTE3Njk1MiwiZXhwIjoxNzc5MjYzMzUyfQ==.signature"
+        },
+        {
+          "name": "globy_token_expires",
+          "value": "1779263351006"
+        },
+        {
+          "name": "globy_user",
+          "value": "{\"id\":\"coach-1765330918790\",\"email\":\"elayne.selma@gmail.com\",\"firstName\":\"Coach\",\"lastName\":\"Elayne\",\"role\":\"COACH\",\"profileImageUrl\":\"/uploads/profile-coach-1765330918790-1765460197837-59707889.jpeg\"}"
+        }
+      ]
+    }
+  ]
+}

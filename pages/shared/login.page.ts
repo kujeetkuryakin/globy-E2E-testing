@@ -15,7 +15,7 @@ export class LoginPage {
     }
 
     async goto() {
-        await this.page.goto('/login');
+        await this.page.goto('https://globy.wins.web.id/login');
     }
 
     async login(email: string, password: string) {
@@ -29,7 +29,7 @@ export class LoginPage {
     }
 
     async getErrorMessage() {
-        this.page.getByRole('alert').waitFor({ state: 'visible' , timeout: 5000})
+        this.page.getByRole('alert').waitFor({ state: 'visible', timeout: 5000 })
         return this.page.getByRole('alert').first();
     }
 }

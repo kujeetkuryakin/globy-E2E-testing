@@ -70,10 +70,12 @@ export class SpecificDateAvailability {
 
     async openPage() {
         await this.coachingScheduleMenu.click();
+        await this.page.waitForTimeout(3000);
         await this.settingAvailabilityBtn.click();
     }
 
     async selectCoach(keyword: string) {
+        await this.page.waitForTimeout(3000);
         await this.coachDropdown.click();
         await this.searchCoachInput.fill(keyword);
         await this.coachOption.click();
@@ -102,7 +104,12 @@ export class SpecificDateAvailability {
         await this.navigateToMonthYear(month, year.toString());
         await this.page.getByRole('button', { name: `${day}`, exact: true }).click();
 
-        return { month, day, year };
+        return {
+            month,
+            day,
+            year,
+            fullDate: `${day} ${month} ${year}`
+        };
     }
 
     async selectRandomTimes() {
@@ -120,14 +127,37 @@ export class SpecificDateAvailability {
     }
 
     async validateSuccess() {
-        await expect(this.notification).toBeVisible();
+        await this.page.waitForTimeout(3000);
+        await expect(this.notification.first()).toBeVisible();
     }
 
-    async validateTimesSelected(times: string[]) {
+    async validateTimesSelected(
+        times: string[]
+    ) {
+
         for (const time of times) {
-            await expect(
-                this.page.getByRole('button', { name: time })
-            ).toHaveClass(/selected|active|bg-blue-100/);
+
+            const selectedTime =
+                this.page
+                    .getByRole(
+                        'checkbox',
+                        { name: time }
+                    )
+                    .first();
+
+            await expect(selectedTime)
+                .toBeVisible({
+                    timeout: 10000
+                });
+
+            await expect(selectedTime)
+                .toBeChecked({
+                    timeout: 10000
+                });
+
+            console.log(
+                `✅ Jam ${time} masih tersimpan`
+            );
         }
     }
 } 

@@ -1,75 +1,32 @@
 import { Page, Locator } from '@playwright/test';
 
-function getDynamicBookingDate() {
-    const date = new Date();
-
-    // 🔥 maju terus tiap hari
-    date.setDate(date.getDate() + 1);
-
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
-
 export class BookSessionPage {
     page: Page;
 
     coachingScheduleMenu: Locator;
     addSessionBtn: Locator;
-
     onlineBtn: Locator;
-
+    multipleTab: Locator;
     chooseCoachBtn: Locator;
     chooseMenteeBtn: Locator;
-
     menteeSearchInput: Locator;
-
+    coachSearchInput: Locator;
     regularBtn: Locator;
-
-    dateInput: Locator;
-
-    createSessionBtn: Locator;
-
-    successNotif: Locator;
+    createSessionsBtn: Locator;
 
     constructor(page: Page) {
         this.page = page;
 
-        this.coachingScheduleMenu = page.getByRole('link', {
-            name: 'Coaching Schedule'
-        });
-
-        this.addSessionBtn = page.getByRole('button', {
-            name: 'Add Session'
-        });
-
-        this.onlineBtn = page.getByRole('button', {
-            name: 'Online'
-        });
-
-        this.chooseCoachBtn = page.getByRole('button', {
-            name: 'Choose coach'
-        });
-
-        this.chooseMenteeBtn = page.getByRole('button', {
-            name: 'Choose mentee'
-        });
-
-        this.menteeSearchInput = page.getByPlaceholder('Search mentees...');
-
-        this.regularBtn = page.getByRole('button', {
-            name: 'Regular'
-        });
-
-        this.dateInput = page.locator('input[type="date"]');
-
-        this.createSessionBtn = page.getByRole('button', {
-            name: 'Create Session'
-        });
-
-        this.successNotif = page.getByText(/session/i);
+        this.coachingScheduleMenu = page.getByRole('link', { name: 'Coaching Schedule' });
+        this.addSessionBtn = page.getByRole('button', { name: 'Add Session' });
+        this.onlineBtn = page.getByRole('button', { name: 'Online' });
+        this.multipleTab = page.getByRole('tab', { name: 'Multiple' });
+        this.chooseCoachBtn = page.getByRole('button', { name: 'Choose coach' });
+        this.coachSearchInput = page.getByPlaceholder('Search coaches...');
+        this.chooseMenteeBtn = page.getByRole('button', { name: 'Choose mentee' });
+        this.menteeSearchInput = page.getByPlaceholder('Search mentees...'); // Input ini tidak ada di raw script tapi berguna jika butuh search
+        this.regularBtn = page.getByRole('button', { name: 'Regular' });
+        this.createSessionsBtn = page.getByRole('button', { name: 'Create Sessions' });
     }
 
     async goto() {
@@ -80,51 +37,86 @@ export class BookSessionPage {
         await this.addSessionBtn.click();
     }
 
-    async chooseOnlineSession() {
-        await this.onlineBtn.click();
+    async chooseModeAndTab() {
+        await this.multipleTab.click();
+        await this.onlineBtn.first().click(); // Cukup satu kali seperti request user
     }
 
-    async selectCoach() {
+    async selectCoach(coachNameMatch: string | RegExp) {
         await this.chooseCoachBtn.click();
-
-        await this.page
-            .getByRole('option', {
-                name: /Coach Elayne/
-            })
-            .click();
+        await this.page.waitForTimeout(3000);
+        await this.page.getByRole('option', { name: coachNameMatch }).click();
     }
 
-    async selectMentee(keyword: string) {
+    async selectMentee(menteeNameMatch: string | RegExp) {
         await this.chooseMenteeBtn.click();
-
-        await this.menteeSearchInput.fill(keyword);
-
-        await this.page
-            .getByRole('option', {
-                name: /Daffa Arkan/
-            })
-            .click();
+        // Tambahkan delay jika daftar mentee butuh waktu untuk muncul setelah diklik
+        await this.page.waitForTimeout(3000);
+        await this.page.getByRole('option', { name: menteeNameMatch }).nth(0).click();
     }
 
     async selectRegularType() {
         await this.regularBtn.click();
     }
 
-    async selectDynamicDate() {
-        const bookingDate = getDynamicBookingDate();
+    /**
+     * Mengisi detail sesi dengan fitur auto-retry jika jam tidak tersedia
+     * @param index Indeks baris sesi (0 untuk baris pertama, 1 untuk baris kedua, dst)
+     * @param startDateStr Tanggal awal mulai mencoba dalam format YYYY-MM-DD
+     * @param timePattern Pola jam yang dicari, misal '09:'
+     * @param maxAttempts Batas maksimal mencoba tanggal berikutnya
+     * @returns Tanggal akhir yang sukses dipilih
+     */
+    async fillSessionDetailsWithRetry(
+        index: number,
+        startDateStr: string,
+        timePattern: string | RegExp,
+        maxAttempts: number = 30
+    ): Promise<string> {
+        let currentDateObj = new Date(startDateStr);
 
-        await this.dateInput.fill(bookingDate);
+        for (let attempt = 0; attempt < maxAttempts; attempt++) {
+            const year = currentDateObj.getFullYear();
+            const month = String(currentDateObj.getMonth() + 1).padStart(2, '0');
+            const day = String(currentDateObj.getDate()).padStart(2, '0');
+            const dateStr = `${year}-${month}-${day}`;
 
-        return bookingDate;
-    }
+            console.log(`[Session ${index + 1}] Mencoba tanggal: ${dateStr} untuk jam: ${timePattern}`);
 
-    async selectTime(time: string) {
-        await this.page.getByRole('button', {
-            name: time
-        }).click();
+            const dateInput = this.page.getByRole('textbox').nth(index);
+            await dateInput.fill(dateStr);
+
+            await this.page.waitForLoadState(
+                'networkidle'
+            );
+
+            // Pendekatan: cari locator checkbox
+            const timeCheckbox = this.page.getByRole('checkbox', { name: timePattern });
+
+            const checkboxVisible = await timeCheckbox.nth(index).waitFor({ state: 'visible', timeout: 2000 })
+                .then(() => true)
+                .catch(() => false);
+
+            if (checkboxVisible) {
+                // Cek apakah disabled
+                const isDisabled = await timeCheckbox.nth(index).isDisabled();
+                if (!isDisabled) {
+                    await timeCheckbox.nth(index).click();
+                    console.log(`✅ Sukses memilih tanggal ${dateStr} dan jam ${timePattern}`);
+                    return dateStr;
+                }
+            }
+
+            console.log(`❌ Tanggal ${dateStr} tidak ada slot jam ${timePattern} atau disabled. Maju 1 hari...`);
+            // Tambah 1 hari
+            currentDateObj.setDate(currentDateObj.getDate() + 1);
+        }
+
+        throw new Error(`Gagal menemukan slot jam ${timePattern} setelah ${maxAttempts} percobaan mulai dari ${startDateStr}`);
     }
 
     async submit() {
-        await this.createSessionBtn.click();
+        await this.createSessionsBtn.click();
     }
+
 }
